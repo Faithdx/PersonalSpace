@@ -1,0 +1,18 @@
+﻿@page "/blog"
+
+<PageTitle>Blog</PageTitle>
+
+<h1>Blog</h1>
+
+<p role="status">Current count: @_currentCount</p>
+
+<MButton Color="primary" OnClick="IncrementCount">Click me</MButton>
+
+@code {
+    private int _currentCount = 0;
+
+    private void IncrementCount()
+    {
+        _currentCount++;
+    }
+}

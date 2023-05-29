@@ -3,24 +3,38 @@
 <MApp Id="app">
     <MAppBar App Flat>
         <MContainer Class="py-0 fill-height">
-            <MAvatar Class="mr-10" Color="grey darken-1" Size="32"></MAvatar>
-            
-            <MTabs Optional="false">
-                @foreach (var link in _links)
-                {
-                    <MTab Href="">@link</MTab>                    
-                }
-            </MTabs>
+            <MToolbarTitle>个人简历</MToolbarTitle>
             <MSpacer></MSpacer>
-
-            <MResponsive MaxWidth="260">
-                <MTextField Dense
-                            Flat
-                            HideDetails="true"
-                            Rounded
-                            SoloInverted
-                            Value="@("")"></MTextField>
-            </MResponsive>
+            <MToolbar  Flat>
+                <ChildContent>
+                    <MTabs Optional="false">
+                        @foreach (var link in _links)
+                        {
+                            <MTab Href="">@link</MTab>
+                        }
+                    </MTabs>
+                    <MSpacer></MSpacer>
+                    <MMenu Left
+                           Bottom>
+                        <ActivatorContent>
+                            <MButton Icon @attributes="@context.Attrs">
+                                <MIcon>mdi-dots-vertical</MIcon>
+                            </MButton>
+                        </ActivatorContent>
+                        <ChildContent>
+                            <MList>
+                                @for (var i = 0; i < 5; i++)
+                                {
+                                    var n = i + 1;
+                                    <MListItem @key="n" OnClick="() => {}">
+                                        <MListItemTitle>Option @n</MListItemTitle>
+                                    </MListItem>
+                                }
+                            </MList>
+                        </ChildContent>
+                    </MMenu>
+                </ChildContent>
+            </MToolbar>
         </MContainer>
     </MAppBar>
 

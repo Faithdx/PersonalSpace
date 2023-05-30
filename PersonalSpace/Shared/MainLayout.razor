@@ -1,41 +1,59 @@
 ﻿@inherits LayoutComponentBase
 
-<MApp Id="app">
-    <MAppBar App Flat>
-        <MContainer Class="py-0 fill-height">
-            <MToolbarTitle>个人简历</MToolbarTitle>
-            <MSpacer></MSpacer>
-            <MToolbar Flat>
-                <ChildContent>
-                    <MTabs Optional="false">
-                        @foreach (var link in _links)
+<MApp Id="app" Style="background:url(http://pic.netbian.com/uploads/allimg/230428/002509-1682612709437f.jpg)">
+    <MAppBar App Flat Color="white">
+        @*<MButton Text Href="/" Class="mr-10" Style="font-size:16px;font-weight:bold">个人简历</MButton>*@
+        <MImage Class="mr-10" Src="https://cdn.masastack.com/images/logo-h-en.png" MinWidth="180" MaxWidth="180"></MImage>
+        <MTabs Optional="false">
+            @foreach (var link in _links)
+            {
+                <MTab Href="@link.Uri">@link.Text</MTab>
+            }
+        </MTabs>
+        <MSpacer></MSpacer>
+        <MResponsive MaxWidth="260">
+            <MTextField Dense Flat HideDetails="true" Rounded SoloInverted Value="@("")"></MTextField>
+        </MResponsive>
+        <MMenu Bottom OffsetY="true" OpenOnHover>
+            <ActivatorContent>
+                <MButton Icon @attributes="@context.Attrs">
+                    <MIcon>mdi-translate</MIcon>
+                </MButton>
+            </ActivatorContent>
+            <ChildContent>
+                <MList Dense>
+                    <MSubheader>TRANSLATIONS</MSubheader>
+                    <MListItemGroup @bind-Value="_selectedItem" Color="primary">
+                        @foreach (var item in _items)
                         {
-                            <MTab Href="@link.Uri">@link.Text</MTab>
+                            <MListItem>
+                                <MListItemContent>
+                                    <MListItemTitle>@item.Text</MListItemTitle>
+                                </MListItemContent>
+                            </MListItem>
                         }
-                    </MTabs>
-                    <MSpacer></MSpacer>
-                    <MMenu Left
-                           Bottom>
-                        <ActivatorContent>
-                            <MButton Icon @attributes="@context.Attrs">
-                                <MIcon>mdi-dots-vertical</MIcon>
-                            </MButton>
-                        </ActivatorContent>
-                        <ChildContent>
-                            <MList>
-                                @for (var i = 0; i < 5; i++)
-                                {
-                                    var n = i + 1;
-                                    <MListItem @key="n" OnClick="() => {}">
-                                        <MListItemTitle>Option @n</MListItemTitle>
-                                    </MListItem>
-                                }
-                            </MList>
-                        </ChildContent>
-                    </MMenu>
-                </ChildContent>
-            </MToolbar>
-        </MContainer>
+                    </MListItemGroup>
+                </MList>
+            </ChildContent>
+        </MMenu>
+        <MMenu Left Bottom>
+            <ActivatorContent>
+                <MButton Icon @attributes="@context.Attrs">
+                    <MIcon>mdi-cog</MIcon>
+                </MButton>
+            </ActivatorContent>
+            <ChildContent>
+                <MList>
+                    @for (var i = 0; i < 5; i++)
+                    {
+                        var n = i + 1;
+                        <MListItem @key="n" OnClick="() => {}">
+                            <MListItemTitle>Option @n</MListItemTitle>
+                        </MListItem>
+                    }
+                </MList>
+            </ChildContent>
+        </MMenu>
     </MAppBar>
 
     <MMain Class="grey lighten-3">
@@ -78,6 +96,12 @@
 </MApp>
 
 @code {
+    private StringNumber _selectedItem = 1;
+    private Item[] _items = new Item[]
+    {
+       new Item { Text= "中文", Icon= "mdi-clock" },
+       new Item { Text= "英文", Icon= "mdi-account" },
+    };
     private List<Nav> _links = new()
     {
         new() { Text = "Home", Uri = "/home" },
@@ -91,7 +115,7 @@
 
     protected override async Task OnInitializedAsync()
     {
-        
+
         await base.OnInitializedAsync();
     }
 
@@ -99,5 +123,12 @@
     {
         public string? Text { get; set; }
         public string? Uri { get; set; }
+    }
+   
+
+    class Item
+    {
+        public string Text { get; set; }
+        public string Icon { get; set; }
     }
 }
